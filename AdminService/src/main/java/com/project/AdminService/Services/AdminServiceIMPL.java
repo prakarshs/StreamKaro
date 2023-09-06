@@ -1,9 +1,7 @@
 package com.project.AdminService.Services;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -52,6 +54,19 @@ public class AdminServiceIMPL implements AdminService{
     public String deleteFile(String fileName) {
         client.deleteObject(bucket, fileName);
         return fileName + " HAS BEEN DELETED.";
+    }
+
+    @Override
+    public List<Map<String,String>> listVideos() {
+        ListObjectsV2Result listObjectsResult = client.listObjectsV2(bucket);
+        return listObjectsResult.getObjectSummaries().stream()
+                .filter(i->i.getKey().toLowerCase().endsWith(".mp4_streamkarofile"))
+                .map(i -> {
+                    Map<String, String> videoInfo = Map.of(
+                            "DateAdded", i.getLastModified().toString(),
+                            "Name", i.getKey()
+                    );
+                    return videoInfo;}).collect(Collectors.toList());
     }
     private File convertMultiPartFileToFile(MultipartFile file) {
         File convertedFile = new File(file.getOriginalFilename());
