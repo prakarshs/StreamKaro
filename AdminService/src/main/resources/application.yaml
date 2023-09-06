@@ -17,16 +17,15 @@ spring:
 cloud:
   aws:
     credentials:
-      access-key:
-      secret-key:
+      access-key: AKIASHVHZB5SMU37R3TW
+      secret-key: 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
     region:
       static: eu-north-1
     stack:
-      auto: false
+        auto: false
 
 application:
   bucket:
-    name:
-
+    name: streamingvideos
 
 

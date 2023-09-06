@@ -10,3 +10,10 @@
   transform: scale(1.2);
   color: #FF6347;
 }
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Optionally, to center vertically as well */
+}
