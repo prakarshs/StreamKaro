@@ -1,0 +1,12 @@
+.hover-scale {
+  transition: all 0.3s;
+  cursor: pointer;
+  transform-origin: center;
+  display: inline-block;
+}
+
+/* Apply the scaling and color change on hover */
+.hover-scale:hover {
+  transform: scale(1.2);
+  color: #FF6347;
+}
