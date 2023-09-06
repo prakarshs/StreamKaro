@@ -6,5 +6,27 @@ spring:
     name: ADMIN-SERVICE
   config:
     import: configserver:http://localhost:9296
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 800MB
+      max-file-size: 1GB
+      max-request-size: 1GB
+
+
+cloud:
+  aws:
+    credentials:
+      access-key:
+      secret-key:
+    region:
+      static: eu-north-1
+    stack:
+      auto: false
+
+application:
+  bucket:
+    name:
+
 
 
