@@ -5,13 +5,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/streamKaro")
+@RequestMapping("/streamKaro/admin")
 public class FrontendControllers {
 
-    @GetMapping("/admin")
+    @GetMapping
     public String index(){
         return "index";
     }
+
+    @GetMapping("/videoUpload")
+    public String videoUpload(){
+        return "videoUpload";
+    }
+
+    @GetMapping("/videoDownload")
+    public String videoDownload(){
+        return "videoDownload";
+    }
+
+    @GetMapping("/videoDelete")
+    public String videoDelete(){
+        return "videoDelete";
+    }
+
 
 
 }
