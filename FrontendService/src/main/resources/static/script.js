@@ -33,14 +33,50 @@ async function fetchAndPopulateVideoInfo() {
 
             const optionsButton = videoCard.querySelector(`.options_${sanitizedClassName}`);
             optionsButton.classList.add('hover-scale');
+            const optionsContainer = document.createElement('div');
+            optionsContainer.className = '';
             optionsButton.addEventListener('click', (event) => {
                 event.stopPropagation();
                 console.log("clicked");
-                console.log(optionsButton)
+                toggleDropdown(optionsContainer);
                 });
 
+            optionsContainer.appendChild(optionsButton);
+
+            // Append the parent container to the videoCard
+
+            videoCard.appendChild(optionsContainer);
             videoListContainer.appendChild(videoCard);
         });
+
+        function toggleDropdown(optionsContainer) {
+             const dropdownMenu = optionsContainer.querySelector('.dropdown');
+
+                if (!dropdownMenu) {
+                    // If the dropdown menu doesn't exist, create it
+                                console.log("IS IT HERE toggle");
+                    createDropdownMenu(optionsContainer);
+                } else {
+                    // If it already exists, toggle its visibility
+                    dropdownMenu.style.display = (dropdownMenu.style.display === 'block') ? 'none' : 'block';
+                }
+            }
+
+        // Function to create the dropdown menu
+        function createDropdownMenu(optionsContainer) {
+            const dropdownMenu = document.createElement('div');
+            console.log("IS IT HERE");
+            dropdownMenu.className = `dropdown fixed z-100 bg-gray border border-gray-700 rounded-md shadow-lg px-4 py-2`;
+            dropdownMenu.innerHTML = `
+                <ul>
+                    <li id="dwnldId"><a href="#" class="download-option text-white hover-scale">Download</a></li>
+                    <li id="dltId"><a href="#" class="delete-option text-white hover-scale">Delete</a></li>
+                </ul>
+            `;
+            optionsContainer.appendChild(dropdownMenu);
+        }
+
+
     } catch (error) {
         console.error(error);
     }

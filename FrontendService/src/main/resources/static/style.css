@@ -21,6 +21,11 @@
   transform: scale(1.05);
   color: #FF6347;
 }
+.hover-white:hover {
+    transform: scale(1.05);
+    background-color: white;
+
+}
 
 .center-content {
     display: flex;
