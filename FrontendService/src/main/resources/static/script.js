@@ -1,5 +1,74 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+    const fileInput = document.getElementById('file-input');
+    const dropArea = document.getElementById('drop-area');
+    const browseButton = document.getElementById('browse-button');
+    const uploadButton = document.getElementById('upload-button');
+    const uploadOption = document.getElementById('upload-option');
+    const fileUploadContainer = document.getElementById('file-upload-container');
+
+    fileUploadContainer.style.display = 'none';
+
+    uploadOption.classList.add('hover-scale')
+    uploadOption.addEventListener('click', function () {
+        if (fileUploadContainer.style.display === 'block' || fileUploadContainer.style.display === '') {
+            // If the container is currently displayed or has no inline style (default), hide it
+            fileUploadContainer.style.display = 'none';
+        } else {
+            // If the container is currently hidden, display it
+            fileUploadContainer.style.display = 'block';
+        }
+    });
+
+    // Function to handle file selection
+    function handleFileSelect(files) {
+        // Handle selected files
+        window.alert('File will be uploaded: '+files[0].name);
+        // You can perform further actions here, such as displaying file names, etc.
+    }
+
+    // Add event listeners
+
+    // Browse button click event
+    browseButton.addEventListener('click', function () {
+        fileInput.click(); // Trigger the file input click
+    });
+
+    // File input change event
+    fileInput.addEventListener('change', function () {
+        const selectedFiles = fileInput.files;
+        handleFileSelect(selectedFiles);
+    });
+
+    // Upload button click event
+    uploadButton.addEventListener('click', function () {
+        const selectedFiles = fileInput.files;
+
+        if (selectedFiles.length > 0) {
+            // Create a FormData object to send the files
+            const formData = new FormData();
+            formData.append('file', selectedFiles[0]); // Assuming only one file is selected
+
+            // Send the formData to the API endpoint using fetch or XMLHttpRequest
+            fetch('http://localhost:8082/streamKaro/upload', {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => response.json())
+                .then(data => {
+
+                    // Handle the response from the server
+                    console.log(data);
+                    // You can display a success message or perform further actions here
+                })
+                .catch(error => {
+                    window.alert('File has been uploaded!!');
+                    console.error(error);
+                    // Handle any errors that occur during the upload
+                });
+        }
+    });
+
 // Function to fetch video information and populate the container
 async function fetchAndPopulateVideoInfo() {
     try {
