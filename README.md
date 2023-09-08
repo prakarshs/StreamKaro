@@ -34,6 +34,10 @@ Key Features:
 
 **4. Admin Control:** Administrators wield powerful tools, including the ability to upload, delete, and download videos. These videos are stored securely in our S3 bucket, forming the foundation of our live streams on the Kafka broker.
 
+**5. Spring Eureka Service Discovery:** We leverage Spring Eureka for service discovery, ensuring that our microservices can easily locate and communicate with each other in a dynamic and scalable manner.
+
+**6. Config Server for Streamlined Configuration:** Our configuration management is enhanced by Spring Config Server, allowing us to centralize and manage application configurations efficiently across our microservices architecture.
+
 **5. Microservices Architecture:**
 
    - **AdminService:** This service empowers administrators to manage videos efficiently. You can effortlessly upload, delete, download, and list videos in our S3 bucket.
