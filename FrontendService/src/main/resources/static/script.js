@@ -15,8 +15,7 @@ async function fetchAndPopulateVideoInfo() {
 
          // Sanitize the videoInfo.Name to create a valid CSS class name
             const sanitizedClassName = videoInfo.Name.replace(/[^\w-]/g, '_');
-
-
+            const fileName = videoInfo.Name;
             // Create a card-like element for each video
             const videoCard = document.createElement('div');
             videoCard.className = 'xl:w-1/3 md:w-1/2 p-4 center-content';
@@ -38,24 +37,26 @@ async function fetchAndPopulateVideoInfo() {
             optionsButton.addEventListener('click', (event) => {
                 event.stopPropagation();
                 console.log("clicked");
-                toggleDropdown(optionsContainer);
+                toggleDropdown(optionsContainer,fileName);
                 });
 
             optionsContainer.appendChild(optionsButton);
 
             // Append the parent container to the videoCard
-
             videoCard.appendChild(optionsContainer);
             videoListContainer.appendChild(videoCard);
         });
 
-        function toggleDropdown(optionsContainer) {
+    } catch (error) {
+        console.error(error);
+    }
+}
+function toggleDropdown(optionsContainer,fileName) {
              const dropdownMenu = optionsContainer.querySelector('.dropdown');
 
                 if (!dropdownMenu) {
                     // If the dropdown menu doesn't exist, create it
-                                console.log("IS IT HERE toggle");
-                    createDropdownMenu(optionsContainer);
+                    createDropdownMenu(optionsContainer,fileName);
                 } else {
                     // If it already exists, toggle its visibility
                     dropdownMenu.style.display = (dropdownMenu.style.display === 'block') ? 'none' : 'block';
@@ -63,10 +64,11 @@ async function fetchAndPopulateVideoInfo() {
             }
 
         // Function to create the dropdown menu
-        function createDropdownMenu(optionsContainer) {
+        function createDropdownMenu(optionsContainer,fileName) {
             const dropdownMenu = document.createElement('div');
-            console.log("IS IT HERE");
+
             dropdownMenu.className = `dropdown fixed z-100 bg-gray border border-gray-700 rounded-md shadow-lg px-4 py-2`;
+            console.log(dropdownMenu.className+"-"+fileName);
             dropdownMenu.innerHTML = `
                 <ul>
                     <li id="dwnldId"><a href="#" class="download-option text-white hover-scale">Download</a></li>
@@ -74,11 +76,67 @@ async function fetchAndPopulateVideoInfo() {
                 </ul>
             `;
             optionsContainer.appendChild(dropdownMenu);
+            const downloadOption = dropdownMenu.querySelector('.download-option');
+            const deleteOption = dropdownMenu.querySelector('.delete-option');
+
+            downloadOption.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    downloadFunction(fileName);
+                });
+
+                deleteOption.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    deleteFunction(fileName);
+                });
+
+
         }
 
+// Function to call download video
+async function downloadFunction(fileName) {
+    try {
+    console.log("in download function "+fileName);
+        // Construct the API URL for download using fileName
+        const downloadUrl = `http://localhost:8082/streamKaro/download/${fileName}`;
+        const response = await fetch(downloadUrl);
 
+        if (!response.ok) {
+            throw new Error('Failed to download video');
+        }
+
+        // Convert the response to Blob
+        const blob = await response.blob();
+
+        // Create a temporary anchor element to trigger the download
+        const a = document.createElement('a');
+        a.href = window.URL.createObjectURL(blob);
+        a.download = fileName;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
     } catch (error) {
-        console.error(error);
+        console.error('Error downloading video:', error);
+        }
+}
+
+// Function to delete a video
+async function deleteFunction(fileName) {
+    try {
+    console.log("in delete function "+fileName);
+        // Construct the API URL for delete using fileName
+        const deleteUrl = `http://localhost:8082/streamKaro/delete/${fileName}`;
+        const response = await fetch(deleteUrl, {
+            method: 'DELETE',
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to delete video');
+        }
+
+        // Handle the delete response here (e.g., update the UI)
+    } catch (error) {
+        console.error('Error deleting video:', error);
     }
 }
 
