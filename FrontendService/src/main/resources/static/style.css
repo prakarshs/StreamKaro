@@ -32,3 +32,25 @@
     justify-content: center;
     align-items: center;
 }
+
+
+#file-upload-container {
+    /* Existing styles */
+    /* ... */
+
+    /* Add animation properties */
+    opacity: 0; /* Start with 0 opacity (invisible) */
+    transform: translateY(-30px); /* Start with a slight upward translation */
+
+
+    /* Apply transition properties */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Adjust the duration and timing function as needed */
+
+    display:block;
+}
+
+#file-upload-container.show {
+    opacity: 1; /* Show the element by changing opacity to 1 */
+    transform: translateY(0); /* Reset the translation to make it visible */
+    display:block;
+}

@@ -15,7 +15,7 @@
             <a class="ml-3 text-xl flex title-font font-medium items-center text-white mb-4 md:mb-0" style="cursor:pointer" href="/streamKaro/admin" >StreamKaro</a>
         </a>
         <nav style="cursor:pointer"  class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-            <a class="mr-5 hover-scale"  href="videoUpload">Video Manager</a>
+            <a class="mr-5 hover-scale"  href="videoManager">Video Manager</a>
             <a class="mr-5 hover-scale">History</a>
 
         </nav>
@@ -29,17 +29,17 @@
 
 </div>
 
-<div id="file-upload-container" class="xl:w-1/5 md:w-1/4 p-4 center-content border border-gray-700 border-opacity-75 p-6 rounded-lg items-center ml-auto bg-gray-800" >
+<div id="file-upload-container" class="xl:w-1/5 md:w-1/4 p-4 center-content border border-gray-700 border-opacity-75 p-6 rounded-lg items-center mx-auto bg-gray-800" >
     <input type="file" id="file-input" style="display: none;" >
-    <div class="text-white hover-scale title-font text-lg border-opacity-75 p-6 rounded-lg center-content">
-        <button id="browse-button">Browse</button>
+    <div class="text-white hover-scale title-font font-medium border-opacity-75 p-6 rounded-lg center-content">
+        <button id="browse-button" style="font-size:26px">Browse</button>
     </div>
-    <div class="text-white hover-scale title-font text-lg border-opacity-75 p-6 rounded-lg center-content">
-    <button id="upload-button">Upload</button>
+    <div class="text-white hover-scale title-font font-medium border-opacity-75 p-6 rounded-lg center-content">
+    <button id="upload-button" style="font-size:26px">Upload</button>
     </div>
 </div>
 
-    <footer class="text-gray-400 bg-gray-900 body-font">
+    <footer class="text-gray-400 bg-gray-900 body-font" style="position: fixed;bottom: 0;width: 100%;">
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
             <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
                 <img src="/logo.png" alt="LOGO" style="width:30px; height:30px;"/>
@@ -50,9 +50,12 @@
             </p>
 
             <!-- Add the "Upload a File" button here -->
-            <button id="upload-option" class="ml-auto bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+            <div class="ml-auto flex flex-col items-center">
+            <button id="upload-option" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
                 Upload a File
             </button>
+            <p class="title-font font-small items-center" style="color:red;">A Video Can Only Be Streamed Once Its Been Uploaded!</p>
+            </div>
         </div>
     </footer>
 </body>
