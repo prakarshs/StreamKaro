@@ -7,16 +7,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const uploadOption = document.getElementById('upload-option');
     const fileUploadContainer = document.getElementById('file-upload-container');
 
-    fileUploadContainer.style.display = 'none';
 
     uploadOption.classList.add('hover-scale')
     uploadOption.addEventListener('click', function () {
-        if (fileUploadContainer.style.display === 'block' || fileUploadContainer.style.display === '') {
+        if (fileUploadContainer.classList.contains('show')) {
             // If the container is currently displayed or has no inline style (default), hide it
-            fileUploadContainer.style.display = 'none';
+            fileUploadContainer.classList.remove('show');
         } else {
             // If the container is currently hidden, display it
-            fileUploadContainer.style.display = 'block';
+            fileUploadContainer.classList.add('show');
         }
     });
 

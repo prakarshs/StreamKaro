@@ -13,21 +13,9 @@ public class FrontendControllers {
         return "index";
     }
 
-    @GetMapping("/videoUpload")
+    @GetMapping("/videoManager")
     public String videoUpload(){
-        return "videoUpload";
+        return "videoManager";
     }
-
-    @GetMapping("/videoDownload")
-    public String videoDownload(){
-        return "videoDownload";
-    }
-
-    @GetMapping("/videoDelete")
-    public String videoDelete(){
-        return "videoDelete";
-    }
-
-
 
 }
