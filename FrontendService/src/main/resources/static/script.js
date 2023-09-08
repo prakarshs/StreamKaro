@@ -115,6 +115,8 @@ async function downloadFunction(fileName) {
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
+
+        window.alert('The video will be downloaded soon.');
     } catch (error) {
         console.error('Error downloading video:', error);
         }
@@ -133,6 +135,7 @@ async function deleteFunction(fileName) {
         if (!response.ok) {
             throw new Error('Failed to delete video');
         }
+        window.alert('The video will be deleted soon.');
 
         // Handle the delete response here (e.g., update the UI)
     } catch (error) {
