@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +69,18 @@ public class AdminServiceIMPL implements AdminService{
                     );
                     return videoInfo;}).collect(Collectors.toList());
     }
+
+    @Override
+    public InputStream getVideoChunkStream(String fileName) {
+        // Fetch the S3 object
+        S3Object s3Object = client.getObject(bucket, fileName);
+
+        // Get the input stream of the S3 object
+        S3ObjectInputStream inputStream = s3Object.getObjectContent();
+
+        return inputStream;
+    }
+
     private File convertMultiPartFileToFile(MultipartFile file) {
         File convertedFile = new File(file.getOriginalFilename());
         try (FileOutputStream fos = new FileOutputStream(convertedFile)) {
@@ -77,5 +90,7 @@ public class AdminServiceIMPL implements AdminService{
         }
         return convertedFile;
     }
+
+
 }
 
