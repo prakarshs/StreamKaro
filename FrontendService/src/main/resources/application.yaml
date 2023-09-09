@@ -6,5 +6,11 @@ spring:
     name: FRONTEND-SERVICE
   config:
     import: configserver:http://localhost:9296
-
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: stream-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
 
