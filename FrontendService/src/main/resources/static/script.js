@@ -1,94 +1,98 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    const fileInput = document.getElementById('file-input');
-    const dropArea = document.getElementById('drop-area');
-    const browseButton = document.getElementById('browse-button');
-    const uploadButton = document.getElementById('upload-button');
-    const uploadOption = document.getElementById('upload-option');
-    const fileUploadContainer = document.getElementById('file-upload-container');
+    const videoManagerBody = document.getElementById('videoManagerBody');
+    const goLiveBody = document.getElementById('goLiveBody');
+
+    if (videoManagerBody) {
+        const fileInput = document.getElementById('file-input');
+        const dropArea = document.getElementById('drop-area');
+        const browseButton = document.getElementById('browse-button');
+        const uploadButton = document.getElementById('upload-button');
+        const uploadOption = document.getElementById('upload-option');
+        const fileUploadContainer = document.getElementById('file-upload-container');
 
 
-    uploadOption.classList.add('hover-scale')
-    uploadOption.addEventListener('click', function () {
-        if (fileUploadContainer.classList.contains('show')) {
-            // If the container is currently displayed or has no inline style (default), hide it
-            fileUploadContainer.classList.remove('show');
-        } else {
-            // If the container is currently hidden, display it
-            fileUploadContainer.classList.add('show');
+        uploadOption.classList.add('hover-scale')
+        uploadOption.addEventListener('click', function () {
+            if (fileUploadContainer.classList.contains('show')) {
+                // If the container is currently displayed or has no inline style (default), hide it
+                fileUploadContainer.classList.remove('show');
+            } else {
+                // If the container is currently hidden, display it
+                fileUploadContainer.classList.add('show');
+            }
+        });
+
+        // Function to handle file selection
+        function handleFileSelect(files) {
+            // Handle selected files
+            window.alert('File will be uploaded: ' + files[0].name);
+            // You can perform further actions here, such as displaying file names, etc.
         }
-    });
 
-    // Function to handle file selection
-    function handleFileSelect(files) {
-        // Handle selected files
-        window.alert('File will be uploaded: '+files[0].name);
-        // You can perform further actions here, such as displaying file names, etc.
-    }
+        // Add event listeners
 
-    // Add event listeners
+        // Browse button click event
+        browseButton.addEventListener('click', function () {
+            fileInput.click(); // Trigger the file input click
+        });
 
-    // Browse button click event
-    browseButton.addEventListener('click', function () {
-        fileInput.click(); // Trigger the file input click
-    });
+        // File input change event
+        fileInput.addEventListener('change', function () {
+            const selectedFiles = fileInput.files;
+            handleFileSelect(selectedFiles);
+        });
 
-    // File input change event
-    fileInput.addEventListener('change', function () {
-        const selectedFiles = fileInput.files;
-        handleFileSelect(selectedFiles);
-    });
+        // Upload button click event
+        uploadButton.addEventListener('click', function () {
+            const selectedFiles = fileInput.files;
 
-    // Upload button click event
-    uploadButton.addEventListener('click', function () {
-        const selectedFiles = fileInput.files;
+            if (selectedFiles.length > 0) {
+                // Create a FormData object to send the files
+                const formData = new FormData();
+                formData.append('file', selectedFiles[0]); // Assuming only one file is selected
 
-        if (selectedFiles.length > 0) {
-            // Create a FormData object to send the files
-            const formData = new FormData();
-            formData.append('file', selectedFiles[0]); // Assuming only one file is selected
-
-            // Send the formData to the API endpoint using fetch or XMLHttpRequest
-            fetch('http://localhost:8082/streamKaro/upload', {
-                method: 'POST',
-                body: formData,
-            })
-                .then(response => response.json())
-                .then(data => {
-
-                    // Handle the response from the server
-                    console.log(data);
-                    // You can display a success message or perform further actions here
+                // Send the formData to the API endpoint using fetch or XMLHttpRequest
+                fetch('http://localhost:8082/streamKaro/upload', {
+                    method: 'POST',
+                    body: formData,
                 })
-                .catch(error => {
-                    window.alert('File has been uploaded!!');
-                    console.error(error);
-                    // Handle any errors that occur during the upload
-                });
-        }
-    });
+                    .then(response => response.json())
+                    .then(data => {
 
-// Function to fetch video information and populate the container
-async function fetchAndPopulateVideoInfo() {
-    try {
-        const response = await fetch('http://localhost:8082/streamKaro/listVideos'); // Replace with your API endpoint
-        if (!response.ok) {
-            throw new Error('Failed to fetch video information');
-        }
-        const videoInfoList = await response.json();
+                        // Handle the response from the server
+                        console.log(data);
+                        // You can display a success message or perform further actions here
+                    })
+                    .catch(error => {
+                        window.alert('File has been uploaded!!');
+                        console.error(error);
+                        // Handle any errors that occur during the upload
+                    });
+            }
+        });
 
-        const videoListContainer = document.getElementById('videoListContainer');
-        videoInfoList.forEach(videoInfo => {
+        // Function to fetch video information and populate the container
+        async function fetchAndPopulateVideoInfo() {
+            try {
+                const response = await fetch('http://localhost:8082/streamKaro/listVideos'); // Replace with your API endpoint
+                if (!response.ok) {
+                    throw new Error('Failed to fetch video information');
+                }
+                const videoInfoList = await response.json();
+
+                const videoListContainer = document.getElementById('videoListContainer');
+                videoInfoList.forEach(videoInfo => {
 
 
-         // Sanitize the videoInfo.Name to create a valid CSS class name
-            const sanitizedClassName = videoInfo.Name.replace(/[^\w-]/g, '_');
-            const fileName = videoInfo.Name;
-            // Create a card-like element for each video
-            const videoCard = document.createElement('div');
-            videoCard.className = 'xl:w-1/3 md:w-1/2 p-4 center-content';
+                    // Sanitize the videoInfo.Name to create a valid CSS class name
+                    const sanitizedClassName = videoInfo.Name.replace(/[^\w-]/g, '_');
+                    const fileName = videoInfo.Name;
+                    // Create a card-like element for each video
+                    const videoCard = document.createElement('div');
+                    videoCard.className = 'xl:w-1/3 md:w-1/2 p-4 center-content';
 
-            videoCard.innerHTML = `
+                    videoCard.innerHTML = `
                 <div class=" border border-gray-700 border-opacity-75 p-6 rounded-lg hover-scale-small">
                     <div class="options_${sanitizedClassName} w-10 h-10 inline-flex items-center justify-center rounded-full bg-gray-800 text-indigo-400 mb-4 ">
                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF6347" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
@@ -98,45 +102,45 @@ async function fetchAndPopulateVideoInfo() {
                 </div>
             `;
 
-            const optionsButton = videoCard.querySelector(`.options_${sanitizedClassName}`);
-            optionsButton.classList.add('hover-scale');
-            const optionsContainer = document.createElement('div');
-            optionsContainer.className = '';
-            optionsButton.addEventListener('click', (event) => {
-                event.stopPropagation();
-                console.log("clicked");
-                toggleDropdown(optionsContainer,fileName);
+                    const optionsButton = videoCard.querySelector(`.options_${sanitizedClassName}`);
+                    optionsButton.classList.add('hover-scale');
+                    const optionsContainer = document.createElement('div');
+                    optionsContainer.className = '';
+                    optionsButton.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        console.log("clicked");
+                        toggleDropdown(optionsContainer, fileName);
+                    });
+
+                    optionsContainer.appendChild(optionsButton);
+
+                    // Append the parent container to the videoCard
+                    videoCard.appendChild(optionsContainer);
+                    videoListContainer.appendChild(videoCard);
                 });
 
-            optionsContainer.appendChild(optionsButton);
-
-            // Append the parent container to the videoCard
-            videoCard.appendChild(optionsContainer);
-            videoListContainer.appendChild(videoCard);
-        });
-
-    } catch (error) {
-        console.error(error);
-    }
-}
-function toggleDropdown(optionsContainer,fileName) {
-             const dropdownMenu = optionsContainer.querySelector('.dropdown');
-
-                if (!dropdownMenu) {
-                    // If the dropdown menu doesn't exist, create it
-                    createDropdownMenu(optionsContainer,fileName);
-                } else {
-                    // If it already exists, toggle its visibility
-                    dropdownMenu.style.display = (dropdownMenu.style.display === 'block') ? 'none' : 'block';
-                }
+            } catch (error) {
+                console.error(error);
             }
+        }
+        function toggleDropdown(optionsContainer, fileName) {
+            const dropdownMenu = optionsContainer.querySelector('.dropdown');
+
+            if (!dropdownMenu) {
+                // If the dropdown menu doesn't exist, create it
+                createDropdownMenu(optionsContainer, fileName);
+            } else {
+                // If it already exists, toggle its visibility
+                dropdownMenu.style.display = (dropdownMenu.style.display === 'block') ? 'none' : 'block';
+            }
+        }
 
         // Function to create the dropdown menu
-        function createDropdownMenu(optionsContainer,fileName) {
+        function createDropdownMenu(optionsContainer, fileName) {
             const dropdownMenu = document.createElement('div');
 
             dropdownMenu.className = `dropdown fixed z-100 bg-gray border border-gray-700 rounded-md shadow-lg px-4 py-2`;
-            console.log(dropdownMenu.className+"-"+fileName);
+            console.log(dropdownMenu.className + "-" + fileName);
             dropdownMenu.innerHTML = `
                 <ul>
                     <li id="dwnldId"><a href="#" class="download-option text-white hover-scale">Download</a></li>
@@ -148,70 +152,180 @@ function toggleDropdown(optionsContainer,fileName) {
             const deleteOption = dropdownMenu.querySelector('.delete-option');
 
             downloadOption.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    downloadFunction(fileName);
+                event.preventDefault();
+                downloadFunction(fileName);
+            });
+
+            deleteOption.addEventListener('click', function (event) {
+                event.preventDefault();
+                deleteFunction(fileName);
+            });
+
+
+        }
+
+        // Function to call download video
+        async function downloadFunction(fileName) {
+            try {
+                console.log("in download function " + fileName);
+                // Construct the API URL for download using fileName
+                const downloadUrl = `http://localhost:8082/streamKaro/download/${fileName}`;
+                const response = await fetch(downloadUrl);
+
+                if (!response.ok) {
+                    throw new Error('Failed to download video');
+                }
+
+                // Convert the response to Blob
+                const blob = await response.blob();
+
+                // Create a temporary anchor element to trigger the download
+                const a = document.createElement('a');
+                a.href = window.URL.createObjectURL(blob);
+                a.download = fileName;
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+
+                window.alert('The video will be downloaded soon.');
+            } catch (error) {
+                console.error('Error downloading video:', error);
+            }
+        }
+
+        // Function to delete a video
+        async function deleteFunction(fileName) {
+            try {
+                console.log("in delete function " + fileName);
+                // Construct the API URL for delete using fileName
+                const deleteUrl = `http://localhost:8082/streamKaro/delete/${fileName}`;
+                const response = await fetch(deleteUrl, {
+                    method: 'DELETE',
                 });
 
-                deleteOption.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    deleteFunction(fileName);
-                });
+                if (!response.ok) {
+                    throw new Error('Failed to delete video');
+                }
+                window.alert('The video will be deleted soon.');
 
-
+                // Handle the delete response here (e.g., update the UI)
+            } catch (error) {
+                console.error('Error deleting video:', error);
+            }
         }
 
-// Function to call download video
-async function downloadFunction(fileName) {
-    try {
-    console.log("in download function "+fileName);
-        // Construct the API URL for download using fileName
-        const downloadUrl = `http://localhost:8082/streamKaro/download/${fileName}`;
-        const response = await fetch(downloadUrl);
-
-        if (!response.ok) {
-            throw new Error('Failed to download video');
-        }
-
-        // Convert the response to Blob
-        const blob = await response.blob();
-
-        // Create a temporary anchor element to trigger the download
-        const a = document.createElement('a');
-        a.href = window.URL.createObjectURL(blob);
-        a.download = fileName;
-        a.style.display = 'none';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-
-        window.alert('The video will be downloaded soon.');
-    } catch (error) {
-        console.error('Error downloading video:', error);
-        }
-}
-
-// Function to delete a video
-async function deleteFunction(fileName) {
-    try {
-    console.log("in delete function "+fileName);
-        // Construct the API URL for delete using fileName
-        const deleteUrl = `http://localhost:8082/streamKaro/delete/${fileName}`;
-        const response = await fetch(deleteUrl, {
-            method: 'DELETE',
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to delete video');
-        }
-        window.alert('The video will be deleted soon.');
-
-        // Handle the delete response here (e.g., update the UI)
-    } catch (error) {
-        console.error('Error deleting video:', error);
+        // Call the function to fetch and populate video information
+        fetchAndPopulateVideoInfo();
     }
-}
 
-// Call the function to fetch and populate video information
-fetchAndPopulateVideoInfo();
+
+
+    if (goLiveBody) {
+
+        // Function to fetch video information and populate the container
+        async function fetchAndPopulateVideoInfo() {
+            try {
+                const response = await fetch('http://localhost:8082/streamKaro/listVideos'); // Replace with your API endpoint
+                if (!response.ok) {
+                    throw new Error('Failed to fetch video information');
+                }
+                const videoInfoList = await response.json();
+
+                const videoListContainer = document.getElementById('videoListContainer');
+                videoInfoList.forEach(videoInfo => {
+
+
+                    // Sanitize the videoInfo.Name to create a valid CSS class name
+                    const sanitizedClassName = videoInfo.Name.replace(/[^\w-]/g, '_');
+                    const fileName = videoInfo.Name;
+                    // Create a card-like element for each video
+                    const videoCard = document.createElement('div');
+                    videoCard.className = 'xl:w-1/3 md:w-1/2 p-4 center-content';
+
+                    videoCard.innerHTML = `
+                    <div class=" border border-gray-700 border-opacity-75 p-6 rounded-lg hover-scale-small">
+                        <div class="options_${sanitizedClassName} w-10 h-10 inline-flex items-center justify-center rounded-full bg-gray-800 text-indigo-400 mb-4 ">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 24 24" fill="none" stroke="#0BDA51" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+                        </div>
+                        <h2 class="text-lg text-white font-medium title-font mb-2">${videoInfo.Name}</h2>
+                        <p class="leading-relaxed text-white font-medium text-base">${videoInfo.DateAdded}</p>
+                    </div>
+                `;
+
+                    const optionsButton = videoCard.querySelector(`.options_${sanitizedClassName}`);
+                    optionsButton.classList.add('hover-scale');
+                    optionsButton.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        console.log("clicked");
+
+                        // Create a video element dynamically
+                        const videoElement = document.createElement("video");
+                        videoElement.controls = true; // Show video controls (play, pause, etc.)
+
+                        // Append the video element to your HTML document
+                        document.body.appendChild(videoElement);
+
+
+                        fetch(`http://localhost:8082/streamKaro/stream/${fileName}`)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error("Failed to fetch video data");
+                                }
+
+                                // Create a ReadableStream from the response body
+                                const stream = response.body;
+
+                                // Create a MediaSource object
+                                const mediaSource = new MediaSource();
+                                videoElement.src = URL.createObjectURL(mediaSource);
+
+                                // Handle media source open event
+                                mediaSource.addEventListener('sourceopen', () => {
+                                    // Create a MediaSourceBuffer for the video content
+                                    const sourceBuffer = mediaSource.addSourceBuffer('video/mp4'); // Adjust the MIME type as needed
+                                    // Fetch and append video data to the buffer as it arrives
+                                    const reader = stream.getReader();
+                                    const processStream = async () => {
+                                        while (true) {
+                                            const { done, value } = await reader.read();
+                                            if (done) {
+                                                break;
+                                            }
+                                            sourceBuffer.appendBuffer(value);
+                                        }
+                                    };
+
+                                    // Start processing the stream
+                                    processStream()
+                                        .then(() => {
+                                            // Play the video once the stream has been processed
+                                            videoElement.play();
+                                        })
+                                        .catch(error => {
+                                            console.error(error);
+                                        });
+                                });
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            });
+                    });
+
+                    videoListContainer.appendChild(videoCard);
+                });
+
+
+            } catch (error) {
+                console.error(error);
+            }
+
+        }
+
+
+
+        // Call the function to fetch and populate video information
+        fetchAndPopulateVideoInfo();
+    }
 
 });
