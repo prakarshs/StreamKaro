@@ -72,6 +72,7 @@ public class AdminServiceIMPL implements AdminService{
 
     @Override
     public InputStream getVideoChunkStream(String fileName) {
+        log.info("video chunk area");
         // Fetch the S3 object
         S3Object s3Object = client.getObject(bucket, fileName);
 
