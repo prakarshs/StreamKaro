@@ -67,7 +67,7 @@ This section should list any major frameworks/libraries used to bootstrap your p
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](prakarsh2101@gmail.com)
+Connect with me - [Prakarsh Srivastava](prakarsh2101@gmail.com)
 
 Project Link: [https://github.com/prakarshs/StreamKaro](https://github.com/prakarshs/StreamKaro)
 
