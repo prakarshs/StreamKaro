@@ -24,6 +24,8 @@ Welcome to our cutting-edge live streaming microservice, built on the powerful S
 
 Our platform is designed to offer a diverse set of functionalities that cater to various user roles. At its core, we have harnessed the capabilities of Kafka to provide a dynamic, real-time streaming experience. The heart of our system lies within the Kafka broker, seamlessly connecting streamers and viewers.
 
+We employ a custom Amazon Web Services (AWS) S3 bucket as our dedicated storage repository for housing the uploaded video content. This S3 bucket serves as the primary source from which our streaming service dynamically retrieves video packets in real-time. By leveraging this infrastructure, we enable a seamless and efficient streaming experience for our users, ensuring that they can access and enjoy video content without interruptions or delays. This setup not only enhances the scalability and reliability of our streaming platform but also provides a robust solution for managing and delivering video content across various devices and locations.
+
 Key Features:
 
 **1. Streamer Security with Okta:** We prioritize the security of our content creators by integrating Okta authentication, ensuring that only authorized streamers can broadcast their content to our audience.
