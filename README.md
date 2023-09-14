@@ -30,9 +30,9 @@ Key Features:
 
 **2. Anonymous Viewer Experience:** For viewers, we've eliminated the barriers to entry. No registration or sign-up is required; simply tune in and enjoy the live streams.
 
-**3. Kafka Based Real Time Streaming:** In our Kafka-based live streaming setup, the Streamer Service acts as the producer, generating streaming packets from content creators. These packets are then transmitted to the Kafka broker, which efficiently distributes them. The Frontend Service, serving as the consumer, subscribes to relevant Kafka topics, enabling real-time updates and a seamless streaming experience for viewers. 
+**3. Kafka Based Real Time Streaming:** In our Kafka-based live streaming setup, the Streamer (Admin Service) Service acts as the producer, generating streaming packets from content creators. These packets are then transmitted to the Kafka broker, which efficiently distributes them. The Frontend Service, serving as the consumer, subscribes to relevant Kafka topics, enabling real-time updates and a seamless streaming experience for viewers. 
 
-**4. Admin Control:** Administrators wield powerful tools, including the ability to upload, delete, and download videos. These videos are stored securely in our S3 bucket, forming the foundation of our live streams on the Kafka broker.
+**4. Admin Control:** The content creators are administrators themselves and wield powerful tools, including the ability to upload, delete, and download videos. These videos are stored securely in our S3 bucket, forming the foundation of our live streams on the Kafka broker.
 
 **5. Spring Eureka Service Discovery:** We leverage Spring Eureka for service discovery, ensuring that our microservices can easily locate and communicate with each other in a dynamic and scalable manner.
 
