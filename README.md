@@ -56,6 +56,7 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 * ![SpringBoot]
 * ![JavaScript]
+* ![AWS]
 * ![Okta]
 * ![Apache]
 
@@ -90,6 +91,7 @@ Project Link: [https://github.com/prakarshs/StreamKaro](https://github.com/praka
 [JavaScript]: https://img.shields.io/badge/JavaScript-FFEA00?style=for-the-badge&logo=javaScript&logoColor=black
 [Docker]: https://img.shields.io/badge/Docker-0096FF?style=for-the-badge&logo=docker&logoColor=white
 [Apache]: https://img.shields.io/badge/Apache%20Kafka-DE3163?style=for-the-badge&logo=apache&logoColor=white
+[AWS]: https://img.shields.io/badge/AWS-20232A?style=for-the-badge&logo=amazon&logoColor=FFAC1C
 [Openpdf]: https://img.shields.io/badge/OpenPDF-F3F2ED?style=for-the-badge&logo=adobe&logoColor=DE3163
 [MySql]: https://img.shields.io/badge/MySql-F28C28?style=for-the-badge&logo=mysql&logoColor=white
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
