@@ -9,7 +9,7 @@
   <h3 align="center">StreamKaro! A Kafka Based Streaming Microservice</h3>
 
   <p align="center">
-    Stream anything, anytime for free! Viewers require no signup!
+    Stream anything, anytime for free!
     <br />
 
   </p>
