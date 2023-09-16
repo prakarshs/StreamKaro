@@ -10,7 +10,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 public class KafkaConfig {
 
 
-    @KafkaListener(topics = "Video-Stream", groupId = "stream-group")
+    @KafkaListener(topics = "Video-Stream", groupId = "group-02")
     public void receiveStream(byte[] videopacket) {
 
         log.info("received byte: {}",videopacket);

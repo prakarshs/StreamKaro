@@ -72,7 +72,7 @@ public class AdminController {
         return ResponseEntity.ok(videoList); // Return the list of video filenames or metadata
     }
 
-    @GetMapping(value = "/stream/{fileName}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @GetMapping(value = "/goLive/{fileName}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @ResponseBody
     public ResponseEntity<StreamingResponseBody> streamVideoStart(@PathVariable String fileName) {
         InputStream videoStream = adminService.getVideoChunkStream(fileName);
