@@ -42,7 +42,7 @@ public class FrontendControllers {
         return "goLive";
     }
 
-    @GetMapping("/stream")
+    @GetMapping("/stream/{token}")
     public String stream() {
         return "stream";
     }

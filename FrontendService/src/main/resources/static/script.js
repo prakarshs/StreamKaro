@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    let accessToken = null;
 
     const videoManagerBody = document.getElementById('videoManagerBody');
     const goLiveBody = document.getElementById('goLiveBody');
@@ -278,8 +279,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Define the openVideoStream function as in your separate JavaScript file
 function openVideoStream(fileName) {
+
+    const token = generateAccessToken();
+
  // Construct the URL to the stream.html file
-    const streamUrl = 'stream';
+    const streamUrl = `stream/${token}`;
 
     // Create a new tab with the stream.html URL
     const newTab = window.open(streamUrl, '_blank');
@@ -295,6 +299,21 @@ function openVideoStream(fileName) {
         // Set the video source to the streaming URL
         videoElement.src = videoUrl;
     };
+}
+
+
+// Function to generate a random access token
+function generateAccessToken() {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const tokenLength = 6; // You can adjust the length as needed
+  accessToken = '';
+
+  for (let i = 0; i < tokenLength; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    accessToken += characters.charAt(randomIndex);
+  }
+
+  return accessToken;
 }
 
 
