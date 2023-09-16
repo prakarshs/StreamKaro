@@ -222,8 +222,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     if (goLiveBody) {
+        console.log("in golive");
+        // Call the function to fetch and populate video information
+        fetchAndPopulateVideoInfo();
 
-        // Function to fetch video information and populate the container
+ // Function to fetch video information and populate the container
         async function fetchAndPopulateVideoInfo() {
             try {
                 const response = await fetch('http://localhost:8082/streamKaro/listVideos'); // Replace with your API endpoint
@@ -255,77 +258,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     const optionsButton = videoCard.querySelector(`.options_${sanitizedClassName}`);
                     optionsButton.classList.add('hover-scale');
+
+                    // Add a click event listener to the optionsButton
                     optionsButton.addEventListener('click', (event) => {
-                        event.stopPropagation();
-                        console.log("clicked");
-
-                        // Create a video element dynamically
-                        const videoElement = document.createElement("video");
-                        videoElement.controls = true; // Show video controls (play, pause, etc.)
-
-                        // Append the video element to your HTML document
-                        document.body.appendChild(videoElement);
-
-
-                        fetch(`http://localhost:8082/streamKaro/stream/${fileName}`)
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error("Failed to fetch video data");
-                                }
-
-                                // Create a ReadableStream from the response body
-                                const stream = response.body;
-
-                                // Create a MediaSource object
-                                const mediaSource = new MediaSource();
-                                videoElement.src = URL.createObjectURL(mediaSource);
-
-                                // Handle media source open event
-                                mediaSource.addEventListener('sourceopen', () => {
-                                    // Create a MediaSourceBuffer for the video content
-                                    const sourceBuffer = mediaSource.addSourceBuffer('video/mp4'); // Adjust the MIME type as needed
-                                    // Fetch and append video data to the buffer as it arrives
-                                    const reader = stream.getReader();
-                                    const processStream = async () => {
-                                        while (true) {
-                                            const { done, value } = await reader.read();
-                                            if (done) {
-                                                break;
-                                            }
-                                            sourceBuffer.appendBuffer(value);
-                                        }
-                                    };
-
-                                    // Start processing the stream
-                                    processStream()
-                                        .then(() => {
-                                            // Play the video once the stream has been processed
-                                            videoElement.play();
-                                        })
-                                        .catch(error => {
-                                            console.error(error);
-                                        });
-                                });
-                            })
-                            .catch(error => {
-                                console.error(error);
-                            });
+                        // Call the openVideoStream function when the button is clicked
+                        openVideoStream(fileName);
                     });
+
+
 
                     videoListContainer.appendChild(videoCard);
                 });
 
-
             } catch (error) {
                 console.error(error);
             }
-
         }
-
-
-
-        // Call the function to fetch and populate video information
-        fetchAndPopulateVideoInfo();
     }
 
+// Define the openVideoStream function as in your separate JavaScript file
+function openVideoStream(fileName) {
+
+
+    // Replace this with the actual URL of your video streaming endpoint
+    const videoUrl = `http://localhost:8082/streamKaro/goLive/${fileName}`;
+
+    // Create a new tab
+    const newTab = window.open('', '_blank');
+
+    // Create a video element
+    const videoElement = document.createElement("video");
+    videoElement.controls = true; // Show video controls (play, pause, etc.)
+
+    // Set the video source to the streaming URL
+    videoElement.src = videoUrl;
+
+    // Append the video element to the new tab's document
+    newTab.document.body.appendChild(videoElement);
+
+    // Play the video automatically (optional)
+    videoElement.play();
+}
+
+
 });
+
