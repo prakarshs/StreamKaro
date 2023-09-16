@@ -278,26 +278,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Define the openVideoStream function as in your separate JavaScript file
 function openVideoStream(fileName) {
+ // Construct the URL to the stream.html file
+    const streamUrl = 'stream';
 
+    // Create a new tab with the stream.html URL
+    const newTab = window.open(streamUrl, '_blank');
 
-    // Replace this with the actual URL of your video streaming endpoint
-    const videoUrl = `http://localhost:8082/streamKaro/goLive/${fileName}`;
+    // Wait for the new tab to load before setting the video source
+    newTab.onload = function () {
+        // Access the video element in the new tab
+        const videoElement = newTab.document.getElementById('streamedVideo');
 
-    // Create a new tab
-    const newTab = window.open('', '_blank');
-
-    // Create a video element
-    const videoElement = document.createElement("video");
-    videoElement.controls = true; // Show video controls (play, pause, etc.)
-
-    // Set the video source to the streaming URL
-    videoElement.src = videoUrl;
-
-    // Append the video element to the new tab's document
-    newTab.document.body.appendChild(videoElement);
-
-    // Play the video automatically (optional)
-    videoElement.play();
+        // Replace 'your-video-streaming-url' and 'yourFileName' with your actual values
+        const videoUrl = `http://localhost:8082/streamKaro/goLive/${fileName}`;
+        console.log("almost there: ",videoUrl);
+        // Set the video source to the streaming URL
+        videoElement.src = videoUrl;
+    };
 }
 
 

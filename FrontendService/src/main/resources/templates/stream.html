@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html class="bg-gray-900" lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, white-scale=1.0">
@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Streaming Page</title>
 </head>
-<body id="goLiveBody" class="bg-gray-900">
+<body >
 <header class="text-gray-400 bg-gray-900 body-font">
     <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
         <a class="flex">
@@ -25,7 +25,29 @@
 </header>
 
 
-    <footer class="text-gray-400 bg-gray-900 body-font" style="position: fixed;bottom: 0;width: 100%;">
+<section class="text-gray-400 bg-gray-900 body-font center-content">
+            <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-white">
+                <span class="hover-scale">Here</span>
+                <span class="hover-scale">is</span>
+                <span class="hover-scale">Your</span>
+                <span class="hover-scale">Requested</span>
+                <span class="hover-scale">Live</span>
+                <span class="hover-scale">Stream</span>
+                <span class="hover-scale">Video</span>
+                <span class="hover-scale">!</span>
+            </h1>
+</section>
+
+<main style="flex-grow: 1;">
+<video id="streamedVideo" style="display: block;
+            margin: auto;
+             " controls autoplay>
+    <!-- Video source will be set dynamically via JavaScript -->
+</video>
+    </main>
+
+
+    <footer class="text-gray-400 bg-gray-900 body-font" style="bottom: 0;width: 100%;">
         <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
             <a class="flex title-font font-medium items-center text-white mb-4 md:mb-0">
                 <img src="/logo.png" alt="LOGO" style="width:30px; height:30px;"/>
