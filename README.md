@@ -57,9 +57,6 @@ In a world where content creation and consumption are at the forefront of digita
 
 
 ### Built With
-
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
 * ![SpringBoot]
 * ![JavaScript]
 * ![AWS]
