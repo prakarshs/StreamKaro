@@ -26,6 +26,10 @@ Our platform is designed to offer a diverse set of functionalities that cater to
 
 We employ a custom Amazon Web Services (AWS) S3 bucket as our dedicated storage repository for housing the uploaded video content. This S3 bucket serves as the primary source from which our streaming service dynamically retrieves video packets in real-time. By leveraging this infrastructure, we enable a seamless and efficient streaming experience for our users, ensuring that they can access and enjoy video content without interruptions or delays. This setup not only enhances the scalability and reliability of our streaming platform but also provides a robust solution for managing and delivering video content across various devices and locations.
 
+## Video Demonstration
+
+https://github.com/prakarshs/StreamKaro/assets/138369731/761e4696-c257-4503-a6f6-d9d19c64f6d3
+
 Key Features:
 
 **1. Streamer Security with Okta:** We prioritize the security of our content creators by integrating Okta authentication, ensuring that only authorized streamers can broadcast their content to our audience.
